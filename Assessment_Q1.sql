@@ -5,7 +5,7 @@ WITH savings AS (
            SUM(s.confirmed_amount) AS savings_amount
     FROM adashi_staging.plans_plan AS p
     INNER JOIN adashi_staging.savings_savingsaccount AS s 
-    ON p.id = s.plan_id
+    	ON p.id = s.plan_id
     WHERE p.is_regular_savings = 1 AND s.confirmed_amount > 0
     GROUP BY p.owner_id
 ),
@@ -16,7 +16,7 @@ investments AS (
            SUM(s.confirmed_amount) AS investment_amount
     FROM adashi_staging.plans_plan AS p
     INNER JOIN adashi_staging.savings_savingsaccount AS s 
-    ON p.id = s.plan_id
+    	ON p.id = s.plan_id
     WHERE p.is_a_fund = 1 AND s.confirmed_amount > 0
     GROUP BY p.owner_id
 )
@@ -31,7 +31,7 @@ SELECT
 FROM savings AS s
 -- Join both CTEs
 INNER JOIN investments AS i 
-ON s.owner_id = i.owner_id
+    ON s.owner_id = i.owner_id
 INNER JOIN adashi_staging.users_customuser AS u 
-ON s.owner_id = u.id
+    ON s.owner_id = u.id
 ORDER BY total_deposits DESC;
