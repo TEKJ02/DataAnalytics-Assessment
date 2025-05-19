@@ -2,9 +2,11 @@
 WITH transaction_freq AS (
 	SELECT 
 		owner_id,
+	
 		-- Extract month from transaction date
 		EXTRACT(MONTH FROM transaction_date) AS month,
 		COUNT(transaction_date) AS total_transactions,
+	
 		-- Classify customers into low, medium and high frequency level based on transaction count
 		CASE 
 			WHEN COUNT(transaction_date) <= 2 THEN 'Low Frequency' 
@@ -17,9 +19,14 @@ WITH transaction_freq AS (
 
 SELECT 
 	frequency_category,
+	
 	-- Number of unique customers
 	COUNT(DISTINCT owner_id) AS customer_count,
+
+	-- Rounds average transactions per month to 1 decimal place
 	ROUND(AVG(total_transactions), 1) AS avg_transactions_per_month
 FROM transaction_freq
 GROUP BY frequency_category
+
+-- Sorts average transactions per month from highest to lowest
 ORDER BY avg_transactions_per_month DESC;
