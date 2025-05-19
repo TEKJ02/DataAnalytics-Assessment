@@ -39,4 +39,4 @@ This query estimates the Customer Lifetime Value (CLV) for each customer based o
 - AVG and ROUND Functions: Estimated average transaction value and calculated CLV using a simplified formula, rounded to two decimal places.
 - GROUP BY Logic: Grouped the data by customer to perform aggregation per individual.
 - ORDER BY Clause: Ranked customers from highest to lowest estimated CLV to highlight top-value clients.
-- Final Output: Displays each customer's ID, full name, tenure in months, total transactions, and their estimated CLV — sorted by CLV in descending order.
+- Final Output: Displayed each customer's ID, full name, tenure in months, total transactions, and their estimated CLV — sorted by CLV in descending order.
