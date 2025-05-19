@@ -1,42 +1,60 @@
 # DataAnalytics-Assessment
-# Assessment_Q1
-This query identifies customers who have at least one funded savings plan and one funded investment plan, making them ideal for cross-selling opportunities. I used:
 
-- Common Table Expressions (CTEs): Extracted users with confirmed deposits in savings (is_regular_savings = 1) and investment (is_a_fund = 1) plans respectively.
-- INNER JOIN Logic: Combined users from both CTEs to ensure only those with both plan types are selected.
-- Utlilized the GROUP BY to aggregate data per user, sorted results with ORDER BY to show top depositors, applied COUNT and SUM to calculate the number of plans and total deposit values, used CONCAT to display full user names and applied WHERE for filtering.
-- Final Output: Displayed user id and names, counts of each plan type, and the total deposit value sorted in descending order, rounded to 2 decimal places (using ROUND).
+## Assessment_Q1: High-Value Customers with Multiple Products  
+This query identifies customers with **both a funded savings and investment plan**, making them ideal for cross-selling.
 
-# Assessment_Q2
-This query identifies and categorizes customers based on how frequently they transact monthly. I used:
+### Approach:
+- **CTEs** to extract users with confirmed deposits in savings and investment plans.
+- **INNER JOIN** to find users who have both.
+- **COUNT & SUM** to get number of plans and total deposit amounts.
+- **GROUP BY** for per-user aggregation; **ORDER BY** to rank by total deposits.
+- **CONCAT** for full names; **ROUND** to format totals.
 
-- Common Table Expression (CTE): Defined a temporary result set (transaction_freq) to isolate user transactions and categorize frequency levels before final aggregation.
-- EXTRACT(MONTH FROM transaction_date): Retrieved the month from each transaction date to allow monthly grouping of user activities.
-- CASE Statement: Classified customers into Low, Medium, or High Frequency based on the number of monthly transactions.
-- GROUP BY Logic: Aggregated transactions per user per month to determine their monthly activity level. Finally aggregated transactions per frequency levels.
-- Aggregate Functions: Used COUNT(and DISTINCT) to get the number of unique users per category and AVG(and ROUND) to calculate the average number of transactions per user to 1 decimal place.
-- Final Output: Displayed each frequency category with the number of users and their average monthly transactions, ordered (ORDER BY) from highest to lowest activity.
+**Final Output:**  
+User ID, name, plan counts, and total deposits — sorted in descending order.
 
-# Assessment_Q3
-This query identifies customers with savings or investment plans who have been inactive for over a year. I used:
+---
 
-- CASE Statement: Categorized each plan as either 'Savings' or 'Investment' based on plan type flags (is_regular_savings & is_a_fund).
-- MAX(DATE(...)): Retrieved the most recent transaction date per plan to track the last user activity.
-- DATEDIFF(CURDATE(), MAX(...)): Calculated the number of days since the last transaction to measure inactivity duration.
-- WHERE Clause: Filtered for only savings or investment plans.
-- GROUP BY Logic: Grouped data by individual plan and owner to evaluate inactivity on a plan-by-plan basis.
-- HAVING Clause: Selected only plans with no transactions in over 365 days.
-- ORDER BY Clause: Sorted the results by inactivity days in descending order to highlight the most dormant accounts.
-- Final Output: Displayed the plan_id, owner_id, plan type (Savings or Investment), last_transaction_date, and the number of inactivity_days for each dormant plan — ordered from the longest to shortest inactivity.
+## Assessment_Q2: Transaction Frequency Analysis 
+This query categorizes customers based on their **monthly transaction frequency**.
 
-# Assessment_Q4
-This query estimates the Customer Lifetime Value (CLV) for each customer based on their transaction count and tenure. I used:
+### Approach:
+- **CTE** to track transactions per user per month.
+- **EXTRACT(MONTH)** to group by calendar month.
+- **CASE** to classify frequency levels (Low, Medium, High).
+- **GROUP BY** to aggregate by user and frequency category.
+- **COUNT, AVG & ROUND** to compute unique users and average transactions.
 
-- JOIN Clause: Merged customer data from users_customuser with their savings transactions from savings_savingsaccount.
-- CONCAT Function: Combined customers' first and last names for better readability in reports.
-- TIMESTAMPDIFF(MONTH, ...): Calculated each customer's tenure in months by comparing their date_joined with the current date.
-- COUNT Function: Counted the total number of transactions per user to assess engagement volume.
-- AVG and ROUND Functions: Estimated average transaction value and calculated CLV using a simplified formula, rounded to two decimal places.
-- GROUP BY Logic: Grouped the data by customer to perform aggregation per individual.
-- ORDER BY Clause: Ranked customers from highest to lowest estimated CLV to highlight top-value clients.
-- Final Output: Displayed each customer's ID, full name, tenure in months, total transactions, and their estimated CLV — sorted by CLV in descending order.
+**Final Output:**  
+Frequency category, number of users, and average monthly transactions — ordered by activity level.
+
+---
+
+## Assessment_Q3: Account Inactivity Alert  
+This query highlights **accounts inactive for over a year**.
+
+### Approach:
+- **CASE** to label plan types as 'Savings' or 'Investment'.
+- **MAX(transaction_date)** to get the last activity date.
+- **DATEDIFF** to measure days since last transaction.
+- **GROUP BY** to evaluate inactivity per plan.
+- **HAVING** to filter plans with over 365 days of inactivity.
+- **ORDER BY** to prioritize the most dormant accounts.
+
+**Final Output:**  
+Plan ID, owner ID, type, last transaction date, and inactivity duration.
+
+---
+
+## Assessment_Q4: Customer Lifetime Value (CLV) Estimation  
+This query estimates **CLV per customer** based on transaction behavior and tenure.
+
+### Approach:
+- **JOIN** users with their savings transactions.
+- **TIMESTAMPDIFF** to calculate customer tenure in months.
+- **COUNT** for total transactions; **AVG & ROUND** for average transaction value.
+- **CLV Formula:** (total_transactions / tenure) * 12 * avg_profit_per_transaction)
+- **GROUP BY & ORDER BY** to aggregate and rank customers.
+
+**Final Output:**  
+Customer ID, name, tenure, total transactions, and estimated CLV — ordered by highest CLV.
