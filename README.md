@@ -28,3 +28,15 @@ This query identifies customers with savings or investment plans who have been i
 - HAVING Clause: Selected only plans with no transactions in over 365 days.
 - ORDER BY Clause: Sorted the results by inactivity days in descending order to highlight the most dormant accounts.
 - Final Output: Displayed the plan_id, owner_id, plan type (Savings or Investment), last_transaction_date, and the number of inactivity_days for each dormant plan — ordered from the longest to shortest inactivity.
+
+# Assessment_Q4
+This query estimates the Customer Lifetime Value (CLV) for each customer based on their transaction count and tenure. I used:
+
+- JOIN Clause: Merged customer data from users_customuser with their savings transactions from savings_savingsaccount.
+- CONCAT Function: Combined customers' first and last names for better readability in reports.
+- TIMESTAMPDIFF(MONTH, ...): Calculated each customer's tenure in months by comparing their date_joined with the current date.
+- COUNT Function: Counted the total number of transactions per user to assess engagement volume.
+- AVG and ROUND Functions: Estimated average transaction value and calculated CLV using a simplified formula, rounded to two decimal places.
+- GROUP BY Logic: Grouped the data by customer to perform aggregation per individual.
+- ORDER BY Clause: Ranked customers from highest to lowest estimated CLV to highlight top-value clients.
+- Final Output: Displays each customer's ID, full name, tenure in months, total transactions, and their estimated CLV — sorted by CLV in descending order.
