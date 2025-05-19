@@ -23,11 +23,11 @@ investments AS (
 
 SELECT 
 	u.id AS owner_id,
-    -- Join both first and last name of users
-    CONCAT(u.first_name, ' ', u.last_name) AS name,
-    s.savings_count,
-    i.investment_count,
-    ROUND(s.savings_amount + i.investment_amount, 2) AS total_deposits
+    	-- Join both first and last name of users
+    	CONCAT(u.first_name, ' ', u.last_name) AS name,
+    	s.savings_count,
+    	i.investment_count,
+    	ROUND(s.savings_amount + i.investment_amount, 2) AS total_deposits
 FROM savings AS s
 -- Join both CTEs
 INNER JOIN investments AS i 
