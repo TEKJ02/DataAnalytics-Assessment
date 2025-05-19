@@ -15,7 +15,7 @@ SELECT
     DATEDIFF(CURDATE(), MAX(DATE(s.transaction_date))) AS inactivity_days
 FROM adashi_staging.plans_plan AS p
     
--- Merge savings and plan table
+-- Merge savings and plans table
 INNER JOIN adashi_staging.savings_savingsaccount AS s
     ON s.plan_id = p.id 
     
@@ -26,4 +26,6 @@ GROUP BY s.plan_id, s.owner_id
     
 -- Retrieves accounts with inactive days more than 365 days
 HAVING DATEDIFF(CURDATE(), MAX(DATE(s.transaction_date))) > 365
+
+-- Sorts inactive days from highest to lowest
 ORDER BY inactivity_days DESC;
