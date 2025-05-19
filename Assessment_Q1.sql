@@ -45,5 +45,5 @@ INNER JOIN investments AS i
 INNER JOIN adashi_staging.users_customuser AS u 
     ON s.owner_id = u.id
 
---Sort total deposits from highest to lowest
+-- Sort total deposits from highest to lowest
 ORDER BY total_deposits DESC;
