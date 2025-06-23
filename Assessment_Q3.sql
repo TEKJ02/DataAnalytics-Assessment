@@ -25,7 +25,7 @@ WHERE
 GROUP BY s.plan_id, s.owner_id
     
 -- Retrieves accounts with inactive days more than 365 days
-HAVING DATEDIFF(CURDATE(), MAX(DATE(s.transaction_date))) > 365
+HAVING inactivity_days > 365
 
 -- Sorts inactive days from highest to lowest
 ORDER BY inactivity_days DESC;
